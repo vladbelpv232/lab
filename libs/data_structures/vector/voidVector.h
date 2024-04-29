@@ -17,6 +17,17 @@ typedef struct vectorVoid {
 //возвращает структуру-дескриптор вектор из n значений.
 vectorVoid createVectorV(size_t n, size_t baseTypeSize);
 
+//изменяет количество памяти, выделенное под хранение элементов вектора.
+void reserveV(vectorVoid *v, size_t newCapacity);
+
+//удаляет элементы из контейнера, но не освобождает выделенную память.
+void shrinkToFitV(vectorVoid *v);
+
+//освобождает память, выделенную поднеиспользуемые элементы.
+void clearV(vectorVoid *v);
+
+//освобождает память, выделенную вектору.
+void deleteVectorV(vectorVoid *v);
 
 
 #endif
