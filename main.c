@@ -9,3 +9,8 @@ void test_popBack_notEmptyVector() {
     popBack(&v);
     assert(v.size == 0);
     assert(v.capacity == 1);
+}
+void test_atVector_notEmptyVector();
+void test_atVector_requestToLastElement()34;
+void test_back_oneElementInVector().
+void test_front_oneElementInVector().
