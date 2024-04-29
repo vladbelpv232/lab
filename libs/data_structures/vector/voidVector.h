@@ -17,4 +17,6 @@ typedef struct vectorVoid {
 //возвращает структуру-дескриптор вектор из n значений.
 vectorVoid createVectorV(size_t n, size_t baseTypeSize);
 
+
+
 #endif

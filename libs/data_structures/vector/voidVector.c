@@ -14,3 +14,4 @@ vectorVoid createVectorV(size_t n, size_t baseTypeSize) {
     }
     return result;
 }
+
