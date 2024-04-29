@@ -29,5 +29,11 @@ void clearV(vectorVoid *v);
 //освобождает память, выделенную вектору.
 void deleteVectorV(vectorVoid *v);
 
+// удаляет последний элемент из вектора.
+void popBackV(vectorVoid *v);
+
+// добавляет элемент x в конец вектора v.
+void pushBackV(vectorVoid *v, void *source);
+
 
 #endif
