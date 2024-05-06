@@ -116,6 +116,7 @@ long long findSumOfMaxesOfPseudoDiagonal(matrix m);
 
 bool isUnique(long long *a, int n);
 
+int getMinInArea(matrix m) ;
 
 // возвращает матрицу размера nRows на nCols, построенную из элементов массива a
 matrix createMatrixFromArray(const int *a, size_t nRows, size_t nCols);

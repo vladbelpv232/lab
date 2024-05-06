@@ -56,3 +56,7 @@ long long seventhTask (matrix m) {
     long long res = findSumOfMaxesOfPseudoDiagonal(m);
     return res;
 }
+
+int eighthTask (matrix m) {
+    getMinInArea(m);
+}
