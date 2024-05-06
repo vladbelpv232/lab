@@ -30,3 +30,8 @@ void secondTask(matrix m){
         sortRowsByMaxElement(m);
     }
 }
+
+//упорядочивает столбцы матрицы по неубыванию минимальных элементов столбцов
+void thirdTask(matrix a){
+    sortColsByMinElemnt(a, getMin);
+}
