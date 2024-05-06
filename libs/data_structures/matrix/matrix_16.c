@@ -57,10 +57,18 @@ long long seventhTask (matrix m) {
     return res;
 }
 
+//находит минимальный элемент матрицы в выделенной области.
 int eighthTask (matrix m) {
-    getMinInArea(m);
+    return getMinInArea(m);
 }
 
+//сортирует по расстоянию до начала координат
 void ninthTask (matrix m) {
     sortByDistances(m);
 }
+
+// определяет количество классов эквивалентных
+int tenthTask (matrix m) {
+    return countEqClassesByRowsSum(m);
+}
+
