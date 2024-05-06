@@ -51,3 +51,8 @@ void fifthTask (matrix m) {
 bool sixthTack (matrix m1, matrix m2) {
     return isMutuallyInverseMatrices(m1, m2);
 }
+////Находит сумму максимальных элементов всех псевдодиагоналей данной матрицы.
+long long seventhTask (matrix m) {
+    long long res = findSumOfMaxesOfPseudoDiagonal(m);
+    return res;
+}
