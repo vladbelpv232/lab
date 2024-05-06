@@ -5,6 +5,7 @@ add_library(data_structures
         add_library(data_structures
         matrix/matrix.c
         matrix/tests_for_matrix.c
+        matrix/matrix_16.c
 )
 
 target_link_libraries(data_structures algorithms)
