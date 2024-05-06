@@ -41,3 +41,8 @@ matrix fourthTask (matrix m) {
     matrix res = getSquareOfMatrixIfSymmetric(m);
     return res;
 }
+
+//Если среди сумм элементов строк матрицы нет равных, то транспонировать матрицу.
+void fifthTask (matrix m) {
+    transposeIfMatrixHasNotEqualSumOfRows(m);
+}
