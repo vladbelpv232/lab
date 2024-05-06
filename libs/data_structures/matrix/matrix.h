@@ -57,6 +57,8 @@ void swapColumns(matrix m, int j1, int j2);
 //матрицы m по неубыванию значения функции criteria применяемой для строк
 void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int*, int));
 
+//сортирует строки по неубывнию наибольших элементов строк
+void sortRowsByMaxElement(matrix a)
 
 //выполняет сортировку выбором столбцов
 //матрицы m по неубыванию значения функции criteria применяемой для столбцов
