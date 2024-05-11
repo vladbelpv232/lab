@@ -82,5 +82,10 @@ void twelfthTask (matrix m) {
     swapPenultimateRow(m);
 }
 
+int thirteenthTask (matrix *ms, int nMatrix) {
+    return countNonDescendingRowsMatrices(ms, nMatrix);
+}
+
+
 
 
