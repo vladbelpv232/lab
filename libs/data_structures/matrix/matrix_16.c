@@ -98,6 +98,12 @@ int sixteenthTask (matrix m) {
     return getNSpecialElement2(m);
 }
 
+//принимает матрицу m и массив целых чисел b,
+// и возвращает индекс вектора из матрицы m,
+// у которого угол между ним и вектором b максимален.
+int seventeenthTask (matrix m, int *b) {
+    return getVectorIndexWithMaxAngle(m, b);
+}
 
 //Выводит матрицы, имеющие наибольшее
 //число нулевых строк
