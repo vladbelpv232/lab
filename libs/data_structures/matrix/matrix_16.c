@@ -86,6 +86,10 @@ int thirteenthTask (matrix *ms, int nMatrix) {
     return countNonDescendingRowsMatrices(ms, nMatrix);
 }
 
+//Выводит матрицы с наименьшей нормой.
+void fiveteenthTask (matrix *ms, int nMatrix) {
+    printMatricesWithMinNorm(ms, nMatrix);
+}
 
 //Выводит матрицы, имеющие наибольшее
 //число нулевых строк
