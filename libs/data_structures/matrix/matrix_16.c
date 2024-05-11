@@ -86,6 +86,7 @@ int thirteenthTask (matrix *ms, int nMatrix) {
     return countNonDescendingRowsMatrices(ms, nMatrix);
 }
 
+
 //Выводит матрицы, имеющие наибольшее
 //число нулевых строк
 void fourteenthTask (matrix *ms, int nMatrix) {
