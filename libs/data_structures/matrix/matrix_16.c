@@ -98,6 +98,7 @@ int sixteenthTask (matrix m) {
     return getNSpecialElement2(m);
 }
 
+
 //Выводит матрицы, имеющие наибольшее
 //число нулевых строк
 void fourteenthTask (matrix *ms, int nMatrix) {
