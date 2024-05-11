@@ -112,6 +112,12 @@ void fourteenthTask (matrix *ms, int nMatrix) {
 }
 
 
+//находит минимальный элемент в выделенной области
+int eighteenthTask (matrix m) {
+    return getMinInArea(m);
+}
+
+
 
 
 
