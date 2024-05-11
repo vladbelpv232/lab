@@ -69,7 +69,6 @@ void ninthTask (matrix m) {
 
 // определяет количество классов эквивалентных
 int tenthTask (matrix m) {
-    countEqClassesByRowsSum(m);
     return countEqClassesByRowsSum(m);
 }
 
@@ -77,6 +76,5 @@ int tenthTask (matrix m) {
 //элемент "особым" , если он больше суммы остальных элементов своего столбца.
 int eleventhTask (matrix m) {
     return getNSpecialElement(m);
-}
 
 
