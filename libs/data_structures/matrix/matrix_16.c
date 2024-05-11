@@ -76,5 +76,11 @@ int tenthTask (matrix m) {
 //элемент "особым" , если он больше суммы остальных элементов своего столбца.
 int eleventhTask (matrix m) {
     return getNSpecialElement(m);
+}
+// Функция для замены предпоследней строки матрицы
+void twelfthTask (matrix m) {
+    swapPenultimateRow(m);
+}
+
 
 
