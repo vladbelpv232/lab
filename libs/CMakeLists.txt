@@ -7,7 +7,7 @@ add_executable(untitled main.c
         libs/string_/string_.c
         libs/string_/string_.h
         libs/string_/tests_for_string.c
-        "lab _19.c")
+        libs/date_structures/lab_18.c
 
 
 add_subdirectory(libs)
