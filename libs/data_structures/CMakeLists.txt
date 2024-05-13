@@ -9,7 +9,7 @@ add_library(data_structures
         matrix/tests_for_lab16.c
         matrix/matrix_16.c
         tests_for_string_.c
-        ../string_/lab_18.c
+        lab_18.c
 )
 
 target_link_libraries(data_structures algorithms)
