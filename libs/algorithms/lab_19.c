@@ -33,7 +33,7 @@ void copyFileContent(const char* sourceFile, const char* destinationFile) {
     printf("The contents of the %s file have been successfully copied to the %s file\n", sourceFile, destinationFile);
 }
 
-int main2() {
+int main3() {
     FILE *file = fopen("C:/Users/User/CLionProjects/Untitled/libs/algorithms/1.txt", "r");
     if (file == NULL) {
         printf("File opening error\n");
@@ -133,6 +133,47 @@ int main() {
     fclose(file);
 
     printf("The result of the calculation is added to the file\n");
+
+    return 0;
+}
+
+int main() {
+    // Открываем файл для чтения
+    FILE *inputFile = fopen("C:/Users/User/CLionProjects/Untitled/libs/algorithms/19_4.txt", "r");
+    if (inputFile == NULL) {
+        printf("File opening error\n");
+        return 1;
+    }
+
+    // Открываем файл для записи
+    FILE *outputFile = fopen("C:/Users/User/CLionProjects/Untitled/libs/algorithms/1.txt", "w");
+    if (outputFile == NULL) {
+        printf("File opening error\n");
+        fclose(inputFile);
+        return 1;
+    }
+
+    char word[100], sequence[20];
+
+    printf("Enter a sequence of characters: ");
+    scanf("%s", sequence);
+
+    // Считываем каждое слово из входного файла
+    while (fscanf(inputFile, "%s", word) != EOF) {
+        // Проверяем содержит ли слово заданную последовательность символов
+        if (strstr(word, sequence) != NULL) {
+            // Записываем слово в выходной файл
+            fprintf(outputFile, "%s\n", word);
+        }
+    }
+
+    printf("Words containing a sequence of characters are saved\n");
+
+    fclose(inputFile);
+    fclose(outputFile);
+
+    copyFileContent("C:/Users/User/CLionProjects/Untitled/libs/algorithms/1.txt", "C:/Users/User/CLionProjects/Untitled/libs/algorithms/19_4.txt");
+
 
     return 0;
 }
