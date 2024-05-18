@@ -34,13 +34,13 @@ void copyFileContent(const char* sourceFile, const char* destinationFile) {
 }
 
 int main() {
-    FILE *file = fopen("C:/Users/tanya/CLionProjects/GG/library/algoritms/19_1.txt", "r");
+    FILE *file = fopen("C:/Users/User/CLionProjects/Untitled/libs/algorithms/1.txt", "r");
     if (file == NULL) {
         printf("File opening error\n");
         return 1;
     }
 
-    FILE *output_file = fopen("C:/Users/tanya/CLionProjects/GG/library/algoritms/1.txt", "w");
+    FILE *output_file = fopen("C:/Users/User/CLionProjects/Untitled/libs/algorithms/1.txt", "w");
     if (output_file == NULL) {
         printf("File creation error\n");
         return 1;
