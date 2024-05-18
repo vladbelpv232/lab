@@ -671,7 +671,7 @@ void reverseWords(char *str) {
     free(p); // освобождаем выделенную память
 }
 
-void test_reverseWords1 () {
+void test_reverseWords () {
     char p[MAX_STRING_SIZE] = "Hello world! This is a test.";
     reverseWords(p);
     ASSERT_STRING(p, ".test a is This !world Hello");
@@ -853,37 +853,39 @@ bool hasDuplicateWords(char* sentence) {
     return false; // Одинаковых слов не найдено
 }
 
-void test_checkWordInString() {
-    char str1[] = "my friend Hello my";
-    assert(hasDuplicateWords(str1) == true);
+void test_hasDuplicateWords() {
+    {
+        char str1[] = "my friend Hello my";
+        assert(hasDuplicateWords(str1) == true);
 
-    char str2[] = "my friend Hello";
-    assert(hasDuplicateWords(str1) == false);
-}
-
-int compareWords(char *word1, char *word2) {
-    int count1[26] = {0};
-    int count2[26] = {0};
-
-    int len1 = strlen_(word1);
-    int len2 = strlen_(word2);
-
-    if (len1 != len2) {
-        return 0;
+        char str2[] = "my friend Hello";
+        assert(hasDuplicateWords(str1) == false);
     }
 
-    for (int i = 0; i < len1; i++) {
-        count1[tolower(word1[i]) - 'a']++;
-        count2[tolower(word2[i]) - 'a']++;
-    }
+    int compareWords(char *word1, char *word2) {
+        int count1[26] = {0};
+        int count2[26] = {0};
 
-    for (int i = 0; i < 26; i++) {
-        if (count1[i] != count2[i]) {
+        int len1 = strlen_(word1);
+        int len2 = strlen_(word2);
+
+        if (len1 != len2) {
             return 0;
         }
-    }
 
-    return 1;
+        for (int i = 0; i < len1; i++) {
+            count1[tolower(word1[i]) - 'a']++;
+            count2[tolower(word2[i]) - 'a']++;
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if (count1[i] != count2[i]) {
+                return 0;
+            }
+        }
+
+        return 1;
+    }
 }
 
 void parseString(char *str, BagOfWords *bag) {
@@ -891,297 +893,378 @@ void parseString(char *str, BagOfWords *bag) {
     while (token != NULL) {
         bag->words[bag->size].begin = token;
         bag->words[bag->size].end = token + strlen_(token);
-        bag->size++;
-        token = strtok_(NULL, " ");
-    }
-}
-
-int findPairWithSameLetters(BagOfWords *bag) {
-    for (int i = 0; i < bag->size - 1; i++) {
-        for (int j = i + 1; j < bag->size; j++) {
-            if (compareWords(bag->words[i].begin, bag->words[j].begin)) {
-                char result1[MAX_WORD_SIZE], result2[MAX_WORD_SIZE];
-                wordDescriptorToString(bag->words[i], result1);
-                wordDescriptorToString(bag->words[j], result2);
-                return 1;
-            }
+            bag->size++;
+            token = strtok_(NULL, " ");
         }
     }
 
-    return 0;
-}
+    int findPairWithSameLetters(BagOfWords *bag) {
+        for (int i = 0; i < bag->size - 1; i++) {
+            for (int j = i + 1; j < bag->size; j++) {
+                if (compareWords(bag->words[i].begin, bag->words[j].begin)) {
+                    char result1[MAX_WORD_SIZE], result2[MAX_WORD_SIZE];
+                    wordDescriptorToString(bag->words[i], result1);
+                    wordDescriptorToString(bag->words[j], result2);
+                    return 1;
+                }
+            }
+        }
 
-void test_findPairWithSameLetters() {
-    BagOfWords bag1;
-    bag1.size = 0;
-    parseString("hello world olleh dlrow", &bag1);
-    assert(findPairWithSameLetters(&bag1) == 1);
+        return 0;
+    }
 
-    BagOfWords bag2;
-    bag2.size = 0;
-    parseString("hey hi ha", &bag2);
-    assert(findPairWithSameLetters(&bag2) == 0);
-}
+    void test_findPairWithSameLetters() {
+        BagOfWords bag1;
+        bag1.size = 0;
+        parseString("hello world olleh dlrow", &bag1);
+        assert(findPairWithSameLetters(&bag1) == 1);
+
+        BagOfWords bag2;
+        bag2.size = 0;
+        parseString("hey hi ha", &bag2);
+        assert(findPairWithSameLetters(&bag2) == 0);
+    }
 
 // Функция для получения строки из слов, которые отличны от последнего слова
-char *get_words_except_last(char *str) {
-    char *last_space = strrchr_(str, ' '); // Находим последнее пробельное символ
-    if (last_space != NULL) {
-        *last_space = '\0'; // Удаляем последнее слово из строки
+    char *get_words_except_last(char *str) {
+        char *last_space = strrchr_(str, ' '); // Находим последнее пробельное символ
+        if (last_space != NULL) {
+            *last_space = '\0'; // Удаляем последнее слово из строки
+        }
+        return str; // Возвращаем указатель на начало изменённой строки
     }
-    return str; // Возвращаем указатель на начало изменённой строки
-}
 
-void test_get_words_except_last(){
-    char str1[] = "Hello world this is a test";
-    char *modified_str1 = get_words_except_last(str1);
-    ASSERT_STRING(modified_str1, "Hello world this is a");
+    void test_get_words_except_last() {
+        char str1[] = "Hello world this is a test";
+        char *modified_str1 = get_words_except_last(str1);
+        ASSERT_STRING(modified_str1, "Hello world this is a");
 
-    char str2[] = "hihi haha";
-    char *modified_str2 = get_words_except_last(str2);
-    ASSERT_STRING(modified_str2, "haha");
-}
+        char str2[] = "hihi haha";
+        char *modified_str2 = get_words_except_last(str2);
+        ASSERT_STRING(modified_str2, "haha");
+    }
 
 //Находит слово, предшествующее первому вхождению 𝑤 в 𝑠1
-char *findWordBeforeFirstOccurrence(char *s1, char *s2) {
-    BagOfWords bag;
-    bag.size = 0;
+    char *findWordBeforeFirstOccurrence(char *s1, char *s2) {
+        BagOfWords bag;
+        bag.size = 0;
 
-    char *delimiters = " ,.?!;:"; // пример разделителей
-    char *token = strtok_(s1, delimiters);
-    while (token != NULL) {
-        WordDescriptor word;
-        word.begin = token;
-        word.end = token + strlen_(token);
-        bag.words[bag.size++] = word;
-        token = strtok_(NULL, delimiters);
-    }
+        char *delimiters = " ,.?!;:"; // пример разделителей
+        char *token = strtok_(s1, delimiters);
+        while (token != NULL) {
+            WordDescriptor word;
+            word.begin = token;
+            word.end = token + strlen_(token);
+            bag.words[bag.size++] = word;
+            token = strtok_(NULL, delimiters);
+        }
 
-    char *w = NULL;
-    token = strtok_(s2, delimiters);
-    while (token != NULL) {
-        for (size_t i = 0; i < bag.size; i++) {
-            if (strcmp(bag.words[i].begin, token) == 0) {
-                w = token;
+        char *w = NULL;
+        token = strtok_(s2, delimiters);
+        while (token != NULL) {
+            for (size_t i = 0; i < bag.size; i++) {
+                if (strcmp(bag.words[i].begin, token) == 0) {
+                    w = token;
+                    break;
+                }
+            }
+            if (w != NULL) {
                 break;
             }
+            token = strtok_(NULL, delimiters);
         }
-        if (w != NULL) {
-            break;
-        }
-        token = strtok_(NULL, delimiters);
-    }
 
-    if (w == NULL) {
+        if (w == NULL) {
+            return "0";
+        }
+
+        for (size_t i = 0; i < bag.size; i++) {
+            if (strcmp(bag.words[i].begin, w) == 0) {
+                if (i > 0) {
+                    return bag.words[i - 1].begin;
+                } else {
+                    return "0";
+                }
+            }
+        }
+
         return "0";
     }
 
-    for (size_t i = 0; i < bag.size; i++) {
-        if (strcmp(bag.words[i].begin, w) == 0) {
-            if (i > 0) {
-                return bag.words[i - 1].begin;
-            } else {
-                return "0";
-            }
-        }
+// Тестирующая функция
+    void test_for_findWordBeforeFirstOccurrence1() {
+        char s1[] = "Python is awsome!";
+        char s2[] = "C is good too";
+
+        char *wordBeforeW = findWordBeforeFirstOccurrence(s1, s2);
+        ASSERT_STRING("Python", wordBeforeW);
     }
 
-    return "0";
-}
+    void test_for_findWordBeforeFirstOccurrence2() {
+        char s1[] = "No common words";
+        char s2[] = "Different strings";
 
-// Тестирующая функция
-void test_for_findWordBeforeFirstOccurrence1() {
-    char s1[] = "Python is awsome!";
-    char s2[] = "C is good too";
+        char *wordBeforeW = findWordBeforeFirstOccurrence(s1, s2);
+        ASSERT_STRING("0", wordBeforeW);
+    }
 
-    char *wordBeforeW = findWordBeforeFirstOccurrence(s1, s2);
-    ASSERT_STRING("Python", wordBeforeW);
-}
+    void test_for_findWordBeforeFirstOccurrence3() {
+        char s1[] = "no words before w";
+        char s2[] = "hehe no";
 
-void test_for_findWordBeforeFirstOccurrence2() {
-    char s1[] = "No common words";
-    char s2[] = "Different strings";
-
-    char *wordBeforeW = findWordBeforeFirstOccurrence(s1, s2);
-    ASSERT_STRING("0", wordBeforeW);
-}
-
-void test_for_findWordBeforeFirstOccurrence3() {
-    char s1[] = "no words before w";
-    char s2[] = "hehe no";
-
-    char *wordsBeforeW = findWordBeforeFirstOccurrence(s1, s2);
-    ASSERT_STRING("0", wordsBeforeW);
-}
+        char *wordsBeforeW = findWordBeforeFirstOccurrence(s1, s2);
+        ASSERT_STRING("0", wordsBeforeW);
+    }
 
 //Сборник тестов для функции FindWordBeforeFirstOccurrence
-void test_findWordBeforeFirstOccurrence() {
-    test_for_findWordBeforeFirstOccurrence1();
-    test_for_findWordBeforeFirstOccurrence2();
-    test_for_findWordBeforeFirstOccurrence3();
-}
+    void test_findWordBeforeFirstOccurrence() {
+        test_for_findWordBeforeFirstOccurrence1();
+        test_for_findWordBeforeFirstOccurrence2();
+        test_for_findWordBeforeFirstOccurrence3();
+    }
 
 // Функция для проверки, является ли слово палиндромом
-int is_palindrome(char *word) {
-    int length = strlen_(word);
-    for (int i = 0; i < length / 2; i++) {
-        if (tolower(word[i]) != tolower(word[length - i - 1])) {
-            return 0; // Слово не палиндром
-        }
-    }
-    return 1; // Слово палиндром
-}
-
-// Функция для удаления слов-палиндромов из строки
-void remove_palindromes(char *str) {
-    char *token = strtok_(str, " ");
-    char result[1000] = ""; // Буфер для хранения результата
-
-    while (token != NULL) {
-        if (!is_palindrome(token)) {
-            strcat_(result, token);
-            strcat_(result, " ");
-        }
-        token = strtok_(NULL, " ");
-    }
-
-    // Копируем результат обратно в исходную строку
-    strcpy(str, result);
-}
-
-void test_remove_palindromes(){
-    char str1[] = "mamam hi mamam";
-    remove_palindromes(str1);
-    ASSERT_STRING(str1, "hi");
-
-    char str2[] = "mama hi amam";
-    remove_palindromes(str2);
-    ASSERT_STRING(str2, "mama hi amam");
-}
-
-// Функция, которая создает структуру BagOfWords из обычной строки
-BagOfWords *create_bag_of_words(char *s) {
-    BagOfWords *bag = malloc(sizeof(BagOfWords));
-    bag->size = 0;
-    // Проходим по строке и заполняем массив слов
-    char *p = s;
-    int in_word = 0;
-    while (*p != '\0') {
-        if (*p == ' ') {
-            in_word = 0;
-        } else {
-            if (!in_word) {
-                // Нашли начало нового слова
-                bag->words[bag->size].begin = p;
-                in_word = 1;
+    int is_palindrome(char *word) {
+        int length = strlen_(word);
+        for (int i = 0; i < length / 2; i++) {
+            if (tolower(word[i]) != tolower(word[length - i - 1])) {
+                return 0; // Слово не палиндром
             }
         }
-        p++;
-        if (in_word && (*p == ' ' || *p == '\0')) {
-            // Нашли конец слова
-            bag->words[bag->size].end = p;
-            bag->size++;
-        }
+        return 1; // Слово палиндром
     }
-    return bag;
-}
+
+// Функция для удаления слов-палиндромов из строки
+    void remove_palindromes(char *str) {
+        char *token = strtok_(str, " ");
+        char result[1000] = ""; // Буфер для хранения результата
+
+        while (token != NULL) {
+            if (!is_palindrome(token)) {
+                strcat_(result, token);
+                strcat_(result, " ");
+            }
+            token = strtok_(NULL, " ");
+        }
+
+        // Копируем результат обратно в исходную строку
+        strcpy(str, result);
+    }
+
+    void test_remove_palindromes() {
+        char str1[] = "mamam hi mamam";
+        remove_palindromes(str1);
+        ASSERT_STRING(str1, "hi");
+
+        char str2[] = "mama hi amam";
+        remove_palindromes(str2);
+        ASSERT_STRING(str2, "mama hi amam");
+    }
+
+// Функция, которая создает структуру BagOfWords из обычной строки
+    BagOfWords *create_bag_of_words(char *s) {
+        BagOfWords *bag = malloc(sizeof(BagOfWords));
+        bag->size = 0;
+        // Проходим по строке и заполняем массив слов
+        char *p = s;
+        int in_word = 0;
+        while (*p != '\0') {
+            if (*p == ' ') {
+                in_word = 0;
+            } else {
+                if (!in_word) {
+                    // Нашли начало нового слова
+                    bag->words[bag->size].begin = p;
+                    in_word = 1;
+                }
+            }
+            p++;
+            if (in_word && (*p == ' ' || *p == '\0')) {
+                // Нашли конец слова
+                bag->words[bag->size].end = p;
+                bag->size++;
+            }
+        }
+        return bag;
+    }
 
 // Функция, которая дополняет строку, содержащую меньшее количество слов, последними
 //словами строки, в которой содержится большее количество слов.
-void append(char *s1, char *s2) {
-    // Создаем структуры BagOfWords из строк
-    BagOfWords *bag1 = create_bag_of_words(s1);
-    BagOfWords *bag2 = create_bag_of_words(s2);
-    if (bag1->size < bag2->size) {
-        if (bag1->size == 1) {
-            bag1->size++;
-        }else{
-            bag1->size--;
-        }
-        if (bag2->size == 2) {
-            bag2->size++;
-        }
-        // Находим начало последних bag2->size - bag1->size слов в s2
-        char *p = bag2->words[bag2->size - bag1->size].begin;
-        // Добавляем эти слова в конец s1
-        char *q = s1;
-        while (*q != '\0') {
+    void append(char *s1, char *s2) {
+        // Создаем структуры BagOfWords из строк
+        BagOfWords *bag1 = create_bag_of_words(s1);
+        BagOfWords *bag2 = create_bag_of_words(s2);
+        if (bag1->size < bag2->size) {
+            if (bag1->size == 1) {
+                bag1->size++;
+            } else {
+                bag1->size--;
+            }
+            if (bag2->size == 2) {
+                bag2->size++;
+            }
+            // Находим начало последних bag2->size - bag1->size слов в s2
+            char *p = bag2->words[bag2->size - bag1->size].begin;
+            // Добавляем эти слова в конец s1
+            char *q = s1;
+            while (*q != '\0') {
+                q++;
+            }
+            *q = ' ';
             q++;
-        }
-        *q = ' ';
-        q++;
-        while (*p != '\0') {
-            *q = *p;
-            q++;
-            p++;
-        }
-        *q = '\0';
+            while (*p != '\0') {
+                *q = *p;
+                q++;
+                p++;
+            }
+            *q = '\0';
 
-    } else if (bag1->size > bag2->size){
-        if (bag2->size == 1) {
-            bag2->size++;
-        }else{
-            bag2->size--;
-        }
+        } else if (bag1->size > bag2->size) {
+            if (bag2->size == 1) {
+                bag2->size++;
+            } else {
+                bag2->size--;
+            }
 
-        if (bag1->size == 2) {
-            bag1->size++;
-        }
-        // Находим начало последних bag1->size - bag2->size слов в s1
-        char *p = bag1->words[bag1->size - bag2->size].begin;
-        // Добавляем эти слова в конец s2
-        char *q = s2;
-        while (*q != '\0') {
+            if (bag1->size == 2) {
+                bag1->size++;
+            }
+            // Находим начало последних bag1->size - bag2->size слов в s1
+            char *p = bag1->words[bag1->size - bag2->size].begin;
+            // Добавляем эти слова в конец s2
+            char *q = s2;
+            while (*q != '\0') {
+                q++;
+            }
+            *q = ' ';
             q++;
+            while (*p != '\0') {
+                *q = *p;
+                q++;
+                p++;
+            }
+            *q = '\0';
         }
-        *q = ' ';
-        q++;
-        while (*p != '\0') {
-            *q = *p;
-            q++;
-            p++;
-        }
-        *q = '\0';
+        // Освобождаем память
+        free(bag1);
+        free(bag2);
     }
-    // Освобождаем память
-    free(bag1);
-    free(bag2);
-}
 
 //Тестирующая функция
-void test_for_append1 () {
-    char s1[MAX_STRING_SIZE] = "Hello";
-    char s2[MAX_STRING_SIZE] = "word the world";
-    append(s1, s2);
+    void test_for_append1() {
+        char s1[MAX_STRING_SIZE] = "Hello";
+        char s2[MAX_STRING_SIZE] = "word the world";
+        append(s1, s2);
 
-    ASSERT_STRING("Hello the world", s1);
-}
+        ASSERT_STRING("Hello the world", s1);
+    }
 
-void test_for_append2 () {
-    char s1[MAX_STRING_SIZE] = "the world";
-    char s2[MAX_STRING_SIZE] = "Hello";
-    append(s1, s2);
+    void test_for_append2() {
+        char s1[MAX_STRING_SIZE] = "the world";
+        char s2[MAX_STRING_SIZE] = "Hello";
+        append(s1, s2);
 
-    ASSERT_STRING("Hello world", s2);
-}
+        ASSERT_STRING("Hello world", s2);
+    }
 
-void test_for_append3 () {
-    char s1[MAX_STRING_SIZE] = "bim bim";
-    char s2[MAX_STRING_SIZE] = "bam bam";
-    append(s1, s2);
+    void test_for_append3() {
+        char s1[MAX_STRING_SIZE] = "bim bim";
+        char s2[MAX_STRING_SIZE] = "bam bam";
+        append(s1, s2);
 
-    ASSERT_STRING("bam bam", s2);
-}
+        ASSERT_STRING("bam bam", s2);
+    }
 
 //Сборник тестов для функции append
-void test_append() {
-    test_for_append1();
-    test_for_append2();
-    test_for_append3();
+    void test_append() {
+        test_for_append1();
+        test_for_append2();
+        test_for_append3();
+    }
+
+// Функция для проверки вхождения букв из заданного слова в строку
+    bool checkWordInString(const char *word, const char *str) {
+        bool letters[ALPHABET_SIZE] = {false}; // Инициализируем все элементы как false
+
+        // Помечаем буквы в строке как true
+        for (; *str; ++str) {
+            if (*str >= 'a' && *str <= 'z') {
+                letters[*str - 'a'] = true;
+            } else if (*str >= 'A' && *str <= 'Z') {
+                letters[*str - 'A'] = true;
+            }
+        }
+
+        // Проверяем, входит ли каждая буква из заданного слова в строку
+        for (; *word; ++word) {
+            if (*word >= 'a' && *word <= 'z') {
+                if (!letters[*word - 'a']) {
+                    return false;
+                }
+            } else if (*word >= 'A' && *word <= 'Z') {
+                if (!letters[*word - 'A']) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+//Тестирующая функция
+    void test_for_checkWordInString1() {
+        char word[] = "Python";
+        char str[] = "Phonk tyrbo";
+
+        assert(checkWordInString(word, str) == true);
+    }
+
+    void test_for_checkWordInString2() {
+        char word[] = "junior";
+        char str[] = "bim bim bam bam";
+
+        assert(checkWordInString(word, str) == false);
+    }
+
+    void test_for_checkWordInString3() {
+        char word[] = "oguzok";
+        char str[] = "";
+
+        assert(checkWordInString(word, str) == false);
+    }
+
+//Сборник тестов для функции checkWordInString
+    void test_checkWordInString() {
+        test_for_checkWordInString1();
+        test_for_checkWordInString2();
+        test_for_checkWordInString3();
+    }
+
+//Тесты, тесты, много тестов
+    void tests() {
+        test_removeNonLetters();
+        test_removeExtraSpaces();
+        test_digitToStartLetterToEndt();
+        test_replacesNumbersWithSpaces_task4();
+        test_replace_task5();
+        test_areWordsOrdered_task6();
+        test_reverseWordsBag();
+        test_howManyWordsPalindromes_task8();
+        test_mergeString();
+        test_reverseWords();
+        test_getWordBeforeFirstWordWithA();
+        test_lastWordInFirstStringInSecondString();
+        test_hasDuplicateWords();
+        test_findPairWithSameLetters();
+        test_get_words_except_last();
+        test_findWordBeforeFirstOccurrence();
+        test_remove_palindromes();
+        test_append();
+        test_checkWordInString();
+    }
 }
-
-
 int main() {
-    test_append();
+    tests();
+
     return 0;
 }
