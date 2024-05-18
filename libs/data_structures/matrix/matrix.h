@@ -211,6 +211,9 @@ long long getScalarProductRowAndCol(matrix m, int i, int j);
 // в которой находится наибольший элемент матрицы, на столбец с наименьшим элементом.
 long long getSpecialScalarProduct(matrix m);
 
+// Проверяет, существует ли элемент в матрице.
+int isElementExist(matrix *m, int row, int col);
+
 
 
 

@@ -1263,8 +1263,3 @@ void parseString(char *str, BagOfWords *bag) {
         test_checkWordInString();
     }
 }
-int main() {
-    tests();
-
-    return 0;
-}

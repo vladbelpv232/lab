@@ -8,6 +8,7 @@ add_executable(untitled main.c
         libs/string_/string_.h
         libs/string_/tests_for_string.c
         libs/date_structures/lab_18.c
+        libs/algorithms/lab_19.c
 )
 
 

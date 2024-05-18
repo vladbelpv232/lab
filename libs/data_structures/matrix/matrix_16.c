@@ -1,5 +1,5 @@
 #include "matrix.h"
-#include <stdio.h>
+#include "matrix_lab_16.h"
 
 //Меняет местами строки, в которых находятся максимальный и минимальный элементы.
 void firstTask(matrix *m) {
