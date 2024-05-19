@@ -555,7 +555,7 @@ void test_for_task_19_10() {
     ASSERT_TXT(str2, str3);
 }
 
-void tests(){
+void tests_(){
     test_for_task_19_1();
     test_for_task_19_2();
     test_for_task_19_3();
@@ -568,8 +568,8 @@ void tests(){
     test_for_task_19_10();
 }
 
-int main(){
-    tests();
+int main_(){
+    tests_();
 
     return 0;
 }
