@@ -596,6 +596,52 @@ void test_for_task_10(){
     task_10(fileName, countOutputLines, text);
 }
 
+void task_11(char **dict, char **requests, int *num_in_req, int n, int q) {
+/**
+ int n, q;
+ scanf("%d %d", &n, &q);
+ char dict[n][100], requests[q][100];
+ for (int i = 0; i < n; ++i)
+ scanf("%s", dict[i]);
+ int num_in_req[q];
+ for (int i = 0; i < q; ++i)
+ scanf("%d %s", &num_in_req[i], requests[i]);
+**/
+    int temp_is = 0;
+    int temp_is2 = 0;
+    for (int i = 0; i < q; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (strstr(dict[j], requests[i]) != NULL) {
+                temp_is++;
+                temp_is2++;
+            } else
+                temp_is++;
+            if (temp_is2 == num_in_req[i]) {
+                printf("%d\n", temp_is);
+                break;
+            }
+        }
+        if (num_in_req[i] > temp_is2) {
+            printf("-1\n");
+            temp_is = 0;
+            temp_is2 = 0;
+        } else {
+            temp_is = 0;
+            temp_is2 = 0;
+        }
+    }
+}
+12
+void test_for_task_11() {
+    int n = 10;
+    int q = 3;
+    char *dict[100] = {"aa", "aaa", "aab", "ab", "abc", "ac",
+                       "ba", "daa", "dab", "dadba"};
+    char *requests[100] = {"a", "da", "da"};
+    int num_in_req[3] = {4, 2, 4};
+    task_11(dict, requests, num_in_req, n, q);
+}
+
 void tests_all() {
     test_for_task_1();
     test_for_task_2();
@@ -607,6 +653,7 @@ void tests_all() {
     test_for_task_8();
     test_for_task_9();
     test_for_task_10();
+    test_for_task_11();
 }
 
 int main() {
