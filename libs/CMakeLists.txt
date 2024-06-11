@@ -9,6 +9,7 @@ add_executable(untitled main.c
         libs/string_/tests_for_string.c
         libs/date_structures/lab_18.c
         libs/algorithms/lab_19.c
+        libs/exam/exam.c
 )
 
 
@@ -16,3 +17,4 @@ add_subdirectory(libs)
 target_link_libraries(untitled  data_structures)
 target_link_libraries(untitled algorithms)
 target_link_libraries(untitled string_)
+target_link_libraries(untitled exam)
